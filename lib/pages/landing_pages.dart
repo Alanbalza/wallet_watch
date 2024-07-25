@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Landing extends StatelessWidget {
   const Landing({super.key});
+
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      final bool launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
+        throw 'Could not launch $url';
+      }
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Widget _buildSocialIcon(String assetPath, String url) {
+    return GestureDetector(
+      onTap: () => _launchURL(url),
+      child: Image.asset(assetPath, height: 40, width: 40),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +99,25 @@ class Landing extends StatelessWidget {
                 text: 'Nuevo gasto',
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.pushNamed(context, '/nuevo_gasto');
                   // Añade la acción que deseas realizar
                 },
+              ),
+              _createDrawerItem(
+              icon: Icons.add, 
+              text: 'Gastos', 
+              onTap: (){
+                Navigator.pop(context);
+                 Navigator.pushNamed(context, '/gasto');
+              }
+              ),
+               _createDrawerItem(
+              icon: Icons.add, 
+              text: 'Usuario', 
+              onTap: (){
+                Navigator.pop(context);
+                 Navigator.pushNamed(context, '/user');
+              }
               ),
             ],
           ),
@@ -238,21 +278,13 @@ class Landing extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildSocialIcon('assets/facebook.png'),
-            _buildSocialIcon('assets/twitter.png'),
-            _buildSocialIcon('assets/whatsapp.png'),
-            _buildSocialIcon('assets/instagram.png'),
+            _buildSocialIcon('assets/facebook.png', 'https://www.facebook.com'),
+            _buildSocialIcon('assets/twitter.png', 'https://www.twitter.com'),
+            _buildSocialIcon('assets/whatsapp.png', 'https://www.whatsapp.com'),
+            _buildSocialIcon('assets/instagram.png', 'https://www.instagram.com'),
           ],
         ),
       ],
-    );
-  }
-
-  Widget _buildSocialIcon(String asset) {
-    return Image.asset(
-      asset,
-      height: 40,
-      width: 40,
     );
   }
 }

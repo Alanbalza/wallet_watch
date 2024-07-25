@@ -5,7 +5,9 @@ import 'package:walletwachs/pages/login_pages.dart';
 import 'package:walletwachs/pages/landing_pages.dart';
 import 'package:walletwachs/pages/wallet_pages.dart';
 import 'package:walletwachs/pages/movimientos_pages.dart';
-
+import 'package:walletwachs/pages/nuevo_gastos_pages.dart';
+import 'package:walletwachs/pages/user_page.dart'; 
+import 'package:walletwachs/pages/gastos_pages.dart';// Importa la nueva página
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +15,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +32,9 @@ class MyApp extends StatelessWidget {
         '/landing': (context) => const Landing(),
         '/wallet': (context) => const WalletPage(),
         '/movimientos': (context) => const MovimientosPage(),
-
+        '/nuevo_gasto': (context) => const NuevoGastoPage(),
+        '/user': (context) => const UserPage(),
+        '/gasto': (context) => const GastoPage(), // Agrega la nueva ruta aquí
       },
       debugShowCheckedModeBanner: false,
     );

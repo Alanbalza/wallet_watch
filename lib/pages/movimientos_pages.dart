@@ -30,13 +30,61 @@ class MovimientosPage extends StatelessWidget {
             builder: (context) => IconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                Scaffold.of(context).openEndDrawer();
               },
             ),
           ),
         ],
       ),
-      drawer: const Drawer(), // Aquí puedes agregar tu Drawer personalizado
+      endDrawer: Drawer(
+        child: Container(
+          color: Colors.green,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                ),
+                child: Text(
+                  'WalletWatch',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              _createDrawerItem(
+                icon: Icons.account_balance_wallet,
+                text: 'Carteras',
+                onTap: () {
+                  Navigator.pop(context);
+                   Navigator.pushNamed(context, '/wallet');
+                  // Añade la acción que deseas realizar
+                },
+              ),
+              _createDrawerItem(
+                icon: Icons.add,
+                text: 'Registrar cartera',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/home');
+                  // Añade la acción que deseas realizar
+                },
+              ),
+              _createDrawerItem(
+                icon: Icons.add,
+                text: 'Nuevo gasto',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/nuevo_gasto');
+                  // Añade la acción que deseas realizar
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -63,6 +111,33 @@ class MovimientosPage extends StatelessWidget {
             const SizedBox(height: 16),
             _buildActividad('gasto en:'),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _createDrawerItem({
+    required IconData icon,
+    required String text,
+    required GestureTapCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        color: Colors.lime,
+        child: ListTile(
+          leading: Icon(icon, color: Colors.black),
+          title: Text(
+            text,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onTap: onTap,
         ),
       ),
     );
